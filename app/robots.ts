@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: "/",
             disallow: "/api/",
         },
-        sitemap: "https://baketechsolutions.co.za/sitemap.xml",
+        sitemap: `${site.url}/sitemap.xml`,
     };
 }

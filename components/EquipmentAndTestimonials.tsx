@@ -1,17 +1,20 @@
 "use client";
+import { claims } from "@/lib/site";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Info, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
-export function EquipmentCard({ name, description, id, image }: any) {
+export function EquipmentCard({ name, description, id, image }: {name: string; description: string; id: string; image?: string}) {
     return (
         <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
             <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
                 {image ? (
-                    <img
+                    <Image
                         src={image}
                         alt={name}
+                        fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                 ) : (
@@ -32,7 +35,7 @@ export function EquipmentCard({ name, description, id, image }: any) {
                         Details
                     </Link>
                     <Link
-                        href="/contact"
+                        href={`/contact?product=${encodeURIComponent(id)}`}
                         className="bg-primary/10 text-primary px-4 py-2 rounded-xl text-xs font-bold hover:bg-primary hover:text-white transition-all shadow-sm shadow-primary/10"
                     >
                         Enquire Now
@@ -44,23 +47,8 @@ export function EquipmentCard({ name, description, id, image }: any) {
 }
 
 export function Testimonials() {
-    const reviews = [
-        {
-            name: "Tshepo Mashaba",
-            role: "Owner, Sunrise Bakery",
-            content: "BakeTech saved our production when our deck oven failed during a busy weekend. Their response was lightning fast!",
-        },
-        {
-            name: "Sarah Moodley",
-            role: "Operations Manager, Artisan Crust",
-            content: "The preventative maintenance plan has significantly reduced our downtime. Professional and reliable technicians.",
-        },
-        {
-            name: "Johan van der Merwe",
-            role: "Head Baker, Golden Loaf",
-            content: "Installed our new spiral mixers perfectly. They are the only people we trust with our equipment repairs.",
-        }
-    ];
+    const reviews = claims.testimonials;
+    if (!reviews.length) return null;
 
     return (
         <section className="py-24 bg-secondary">

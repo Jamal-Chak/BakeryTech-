@@ -1,38 +1,6 @@
-import { MetadataRoute } from "next";
-
+import type { MetadataRoute } from "next";
+import { services, equipment } from "@/lib/data";
+import { site } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = "https://baketechsolutions.co.za";
-
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 1,
-        },
-        {
-            url: `${baseUrl}/services`,
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/equipment`,
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/about`,
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/contact`,
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.5,
-        },
-    ];
+ return ["", "/bakery", "/butchery", "/catering", "/services", "/equipment", "/gallery", "/about", "/contact", ...services.map(s => `/services/${s.slug}`), ...equipment.map(e => `/equipment/${e.id}`)].map(path => ({url: `${site.url}${path}`, changeFrequency: "monthly", priority: path ? 0.7 : 1}));
 }

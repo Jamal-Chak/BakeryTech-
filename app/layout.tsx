@@ -1,24 +1,10 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { constructMetadata } from "@/lib/seo";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
-  title: "BakeTech Solutions | Bakery Equipment Maintenance & Supply",
-  description: "Professional bakery equipment maintenance, emergency repairs, and supply services in South Africa. We keep your bakery running.",
-};
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,
@@ -28,10 +14,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={"antialiased min-h-screen flex flex-col"}
       >
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <Header />
-        <main className="flex-grow">
+        <main id="main-content" tabIndex={-1} className="flex-grow">
           {children}
         </main>
         <Footer />

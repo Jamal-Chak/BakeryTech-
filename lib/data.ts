@@ -2,25 +2,25 @@ export const services = [
   {
     title: "Preventative Maintenance",
     slug: "preventative-maintenance",
-    description: "Our comprehensive scheduled maintenance programs are designed to identify potential issues before they become costly failures. We check heating elements, belt tensions, motor health, and control systems to ensure your bakery operates at peak efficiency year-round.",
+    description: "Our comprehensive scheduled maintenance programs are designed to identify potential issues before they become costly failures. We check heating elements, belt tensions, motor health, and control systems to support reliable operation across bakery, butchery and catering equipment.",
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "Emergency Repairs",
     slug: "emergency-repairs",
-    description: "When production stops, every minute counts. Our rapid-response emergency repair team is available 24/7 to troubleshoot and fix critical equipment failures. We carry essential spares for major brands like Macadams, Tombake, and Polin to get you back up and running fast.",
+    description: "When production stops, every minute counts. Our rapid-response emergency repair team is available to discuss critical equipment failures and arrange troubleshooting. Contact us to confirm response times and spare parts availability.",
     image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "Equipment Installation",
     slug: "equipment-installation",
-    description: "Proper installation is the foundation of equipment longevity. Our certified technicians handle the entire installation process, from electrical connections and plumbing integration to final calibration and staff training, ensuring your warranty remains valid and your machine performs perfectly.",
+    description: "Proper installation is the foundation of equipment longevity. Our technicians handle the entire installation process, from electrical connections and plumbing integration to final calibration and staff training, with commissioning requirements agreed for your installation.",
     image: "https://images.unsplash.com/photo-1504328156602-ff144ced4d9b?auto=format&fit=crop&q=80&w=800",
   },
   {
     title: "Spare Parts Supply",
     slug: "spare-parts-supply",
-    description: "We stock a vast inventory of genuine and high-quality aftermarket spare parts for all major industrial bakery equipment. From thermocouples and contractors to conveyor belts and mixer attachments, we can ship parts nationwide to keep your maintenance downtime to a minimum.",
+    description: "Enquire about genuine and aftermarket spare parts for commercial food service equipment, including thermocouples, contactors, conveyor belts and mixer attachments. Availability and delivery options are confirmed with your quotation.",
     image: "https://images.unsplash.com/photo-1530124560676-587cad321376?auto=format&fit=crop&q=80&w=800",
   },
 ];

@@ -1,112 +1,28 @@
 "use client";
-
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Construction } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Services", href: "/services" },
-    { name: "Equipment", href: "/equipment" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
-];
-
+import { Menu, X, MessageCircle, Phone } from "lucide-react";
+import Brand from "./Brand";
+import { SocialLinks, WhatsAppLink } from "./ContactLinks";
+import { site, phoneHref } from "@/lib/site";
+const links = [{name: "Home", href: "/"}, {name: "About Us", href: "/about"}, {name: "Bakery", href: "/bakery"}, {name: "Butchery", href: "/butchery"}, {name: "Catering", href: "/catering"}, {name: "Maintenance & Repair", href: "/services"}, {name: "Gallery", href: "/gallery"}, {name: "Contact", href: "/contact"}];
 export default function Header() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
-    const pathname = usePathname();
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    return (
-        <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"
-                }`}
-        >
-            <div className="container mx-auto px-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="bg-primary p-1.5 rounded-lg">
-                        <Construction className="text-white w-6 h-6" />
-                    </div>
-                    <span className={`text-xl font-bold tracking-tight ${isScrolled ? "text-secondary" : "text-secondary"}`}>
-                        BakeTech<span className="text-primary">Solutions</span>
-                    </span>
-                </Link>
-
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? "text-primary border-b-2 border-primary" : "text-secondary"
-                                }`}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <Link
-                        href="/contact"
-                        className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 hover:bg-primary/90 transition-all"
-                    >
-                        <Phone size={16} />
-                        Request Service
-                    </Link>
-                </nav>
-
-                {/* Mobile Toggle */}
-                <button
-                    className="md:hidden text-secondary"
-                    onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Toggle menu"
-                >
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
-            </div>
-
-            {/* Mobile Nav */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
-                    >
-                        <div className="flex flex-col p-4 gap-4 text-center">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className={`text-lg font-medium py-2 ${pathname === link.href ? "text-primary" : "text-secondary"
-                                        }`}
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <Link
-                                href="/contact"
-                                className="bg-primary text-white py-3 rounded-xl font-bold flex justify-center items-center gap-2"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                <Phone size={18} />
-                                Request Service
-                            </Link>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </header>
-    );
+ const [open, setOpen] = useState(false);
+ const pathname = usePathname();
+ useEffect(() => { if (!open) return; const close = (event: KeyboardEvent) => {if (event.key === "Escape") {setOpen(false); document.getElementById("menu-toggle")?.focus();}}; window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, [open]);
+ return <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
+  <div className="border-b border-slate-100"><div className="container mx-auto px-5 flex justify-between items-center min-h-11 gap-3">
+   <p className="hidden sm:block text-xs font-medium text-slate-600">Supply. Install. Service. <span className="ml-2 text-secondary font-bold">Built for your business.</span></p>
+   <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4"><a href={phoneHref} className="flex items-center gap-2 text-xs font-bold text-secondary"><Phone size={13} aria-hidden="true"/>{site.phoneDisplay}</a><SocialLinks/></div>
+  </div></div>
+  <div className="container mx-auto px-5 flex justify-between items-center gap-5 py-4">
+   <Brand/>
+   <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-6">{links.map(link => <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined} className={`text-sm font-semibold py-2 border-b-2 transition-colors ${pathname === link.href ? "border-primary text-primary" : "border-transparent text-secondary hover:text-primary"}`}>{link.name}</Link>)}</nav>
+   <div className="flex items-center gap-3"><WhatsAppLink className="hidden sm:inline-flex items-center gap-2 bg-primary text-white px-4 py-3 rounded-md text-sm font-bold hover:bg-orange-800"><MessageCircle size={18} aria-hidden="true"/>WhatsApp Quote</WhatsAppLink>
+    <button id="menu-toggle" type="button" className="xl:hidden p-2 text-secondary" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls={open ? "mobile-navigation" : undefined} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button>
+   </div>
+  </div>
+  {open && <nav id="mobile-navigation" aria-label="Mobile navigation" className="xl:hidden border-t border-slate-100 px-5 py-4 max-h-[70vh] overflow-auto">{links.map(link => <Link key={link.href} href={link.href} onClick={() => setOpen(false)} aria-current={pathname === link.href ? "page" : undefined} className={`block px-3 py-3 font-semibold rounded-md ${pathname === link.href ? "text-primary bg-orange-50" : "text-secondary"}`}>{link.name}</Link>)}<WhatsAppLink className="btn-primary mt-3 w-full justify-center"><MessageCircle size={18} aria-hidden="true"/>Get a Quote on WhatsApp</WhatsAppLink></nav>}
+ </header>;
 }

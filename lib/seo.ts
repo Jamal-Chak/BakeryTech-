@@ -1,44 +1,12 @@
-import { Metadata } from "next";
-
-export function constructMetadata({
-    title = "BakeTech Solutions | Bakery Equipment Maintenance & Supply",
-    description = "Professional bakery equipment maintenance, emergency repairs, and supply services in South Africa. We keep your bakery running.",
-    image = "/og-image.jpg",
-    noIndex = false,
-}: {
-    title?: string;
-    description?: string;
-    image?: string;
-    noIndex?: boolean;
-} = {}): Metadata {
-    return {
-        title,
-        description,
-        openGraph: {
-            title,
-            description,
-            images: [
-                {
-                    url: image,
-                },
-            ],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title,
-            description,
-            images: [image],
-            creator: "@baketechsolutions",
-        },
-        icons: {
-            icon: "/favicon.ico",
-        },
-        metadataBase: new URL("https://baketechsolutions.co.za"),
-        ...(noIndex && {
-            robots: {
-                index: false,
-                follow: false,
-            },
-        }),
-    };
+import type { Metadata } from "next";
+import { site } from "./site";
+export function constructMetadata({ title = "Bakery, Butchery & Catering Equipment", description = "Commercial bakery, butchery and catering equipment supply, installation and technical servicing in South Africa.", image = "/opengraph-image", path = "/", noIndex = false }: {title?: string; description?: string; image?: string; path?: string; noIndex?: boolean} = {}): Metadata {
+ const fullTitle = `${title} | ${site.name}`;
+ return {
+  metadataBase: new URL(site.url), title: fullTitle, description,
+  alternates: {canonical: path},
+  openGraph: {type: "website", locale: "en_ZA", siteName: site.name, title: fullTitle, description, url: path, images: [{url: image, alt: site.name}]},
+  twitter: {card: "summary_large_image", title: fullTitle, description, images: [image]},
+  robots: {index: !noIndex, follow: !noIndex},
+ };
 }

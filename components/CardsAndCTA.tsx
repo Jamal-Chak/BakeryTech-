@@ -1,80 +1,10 @@
-"use client";
-
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
-
-export function ServiceCard({ title, description, slug, icon: Icon }: any) {
-    return (
-        <motion.div
-            whileHover={{ y: -10 }}
-            className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-xl transition-all"
-        >
-            <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-primary">
-                <Icon size={32} />
-            </div>
-            <h3 className="text-2xl font-bold text-secondary mb-4">{title}</h3>
-            <p className="text-gray-600 mb-8 flex-grow leading-relaxed">{description}</p>
-            <Link
-                href={`/services/${slug}`}
-                className="text-primary font-bold flex items-center gap-2 group"
-            >
-                Learn More
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-        </motion.div>
-    );
+import { ArrowRight, MessageCircle, BookOpen } from "lucide-react";
+import { WhatsAppLink } from "./ContactLinks";
+export function ServiceCard({ title, description, slug, icon: Icon }: {title: string; description: string; slug: string; icon: LucideIcon}) {
+ return <div className="bg-white p-7 rounded-xl border border-slate-200 flex flex-col h-full hover:border-primary transition-colors"><span className="bg-orange-50 w-12 h-12 rounded-md flex items-center justify-center mb-6 text-primary"><Icon size={26} aria-hidden="true"/></span><h3 className="text-2xl font-bold text-secondary mb-4">{title}</h3><p className="text-slate-600 mb-7 flex-grow leading-relaxed">{description}</p><Link href={`/services/${slug}`} className="text-primary font-bold inline-flex items-center gap-2">Learn more<ArrowRight size={17} aria-hidden="true"/></Link></div>;
 }
-
 export function CTA() {
-    return (
-        <section className="py-20">
-            <div className="container mx-auto px-4">
-                <div className="bg-primary rounded-[3rem] p-12 md:p-20 relative overflow-hidden shadow-2xl shadow-primary/20">
-                    {/* Decorative Circles */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
-
-                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-6">
-                            <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-                                Ready to optimize your bakery operations?
-                            </h2>
-                            <p className="text-white/80 text-lg leading-relaxed max-w-lg">
-                                Don&apos;t wait for a breakdown. Join hundreds of South African bakeries that trust BakeTech Solutions for their maintenance needs.
-                            </p>
-                            <ul className="space-y-3">
-                                {[
-                                    "Free Initial Consultation",
-                                    "24/7 Breakdown Assistance",
-                                    "Certified Technical Team",
-                                    "Genuine Spare Parts Guarantee"
-                                ].map((item) => (
-                                    <li key={item} className="flex items-center gap-3 text-white/90 font-medium">
-                                        <CheckCircle2 size={20} className="text-secondary opacity-60" />
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
-                            <Link
-                                href="/contact"
-                                className="bg-secondary text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-transform text-center"
-                            >
-                                Request a Service
-                            </Link>
-                            <Link
-                                href="tel:+27000000000"
-                                className="bg-white text-primary px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-transform text-center shadow-lg"
-                            >
-                                Call: +27 XX XXX XXXX
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+ return <section className="section-space"><div className="container mx-auto px-5"><div className="bg-secondary text-white rounded-xl p-7 sm:p-12 lg:p-16 relative overflow-hidden"><div className="absolute inset-0 industrial-grid opacity-10 pointer-events-none" aria-hidden="true"/><div className="relative flex flex-col lg:flex-row items-start lg:items-center gap-9 justify-between"><div className="max-w-xl"><p className="eyebrow text-orange-200 mb-4">Let&apos;s get to work</p><h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight">Your next equipment partner.<br/>One conversation away.</h2><p className="text-slate-200 leading-relaxed mt-5">Tell us what your business needs. We&apos;ll help with equipment selection, installation and ongoing support.</p></div><div className="flex flex-col gap-3 w-full lg:w-auto shrink-0"><WhatsAppLink className="btn-primary justify-center"><MessageCircle size={18} aria-hidden="true"/>Get a Quote on WhatsApp</WhatsAppLink><Link href="/contact?request=catalog" className="flex justify-center items-center gap-2 text-sm font-bold py-3 px-4 hover:underline"><BookOpen size={17} aria-hidden="true"/>Request Equipment Catalog</Link></div></div></div></div></section>;
 }
