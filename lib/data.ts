@@ -2,26 +2,26 @@ export const services = [
   {
     title: "Preventative Maintenance",
     slug: "preventative-maintenance",
-    description: "Our comprehensive scheduled maintenance programs are designed to identify potential issues before they become costly failures. We check heating elements, belt tensions, motor health, and control systems to support reliable operation across bakery, butchery and catering equipment.",
-    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=800",
+    description: "Our comprehensive scheduled maintenance programs are designed to identify potential issues before they become costly failures. We check heating elements, belt tensions, motor health, and control systems to support reliable operation across bakery and butchery equipment.",
+    image: "/images/equipment/ovens/industrial-rack-oven.jpg",
   },
   {
     title: "Emergency Repairs",
     slug: "emergency-repairs",
     description: "When production stops, every minute counts. Our rapid-response emergency repair team is available to discuss critical equipment failures and arrange troubleshooting. Contact us to confirm response times and spare parts availability.",
-    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800",
+    image: "/images/equipment/slicers/bread-slicer-silver.jpg",
   },
   {
     title: "Equipment Installation",
     slug: "equipment-installation",
     description: "Proper installation is the foundation of equipment longevity. Our technicians handle the entire installation process, from electrical connections and plumbing integration to final calibration and staff training, with commissioning requirements agreed for your installation.",
-    image: "https://images.unsplash.com/photo-1504328156602-ff144ced4d9b?auto=format&fit=crop&q=80&w=800",
+    image: "/images/equipment/mixers/spiral-mixer-industrial.jpg",
   },
   {
     title: "Spare Parts Supply",
     slug: "spare-parts-supply",
     description: "Enquire about genuine and aftermarket spare parts for commercial food service equipment, including thermocouples, contactors, conveyor belts and mixer attachments. Availability and delivery options are confirmed with your quotation.",
-    image: "https://images.unsplash.com/photo-1530124560676-587cad321376?auto=format&fit=crop&q=80&w=800",
+    image: "/images/equipment/slicers/white-bread-slicer.jpg",
   },
 ];
 
@@ -47,7 +47,7 @@ export const equipment = [
     name: "Industrial Rotary Rack Oven",
     category: "ovens",
     description: "High-capacity rack oven for consistent baking. Stainless steel construction with advanced airflow system.",
-    image: "/images/equipment/ovens/rack-oven-single.jpg",
+    image: "/images/equipment/ovens/industrial-rack-oven.jpg",
     specs: ["Capacity: 18-30 trays", "Temperature: up to 300°C", "Fuel: Gas or Electric"],
   },
   {
@@ -101,7 +101,7 @@ export const equipment = [
     name: "Conveyor Dough Sheeter",
     category: "mixers", // Using mixers category for now or should create new? data.ts has mixers including sheeters in description
     description: "Precision dough sheeter with conveyor belts for puff pastry and danish doughs.",
-    image: "/images/equipment/dough-handling/dough-sheeter-conveyor.jpg",
+    image: "/images/equipment/dough-handling/dough-sheeter-floor.jpg",
     specs: ["width: 500/600mm", "Conveyor Belt", "Foldable Arms"],
   },
 
@@ -111,7 +111,7 @@ export const equipment = [
     name: "Automatic Bread Slicer",
     category: "slicers",
     description: "High-speed slicer for uniform sandwich loaves.",
-    image: "/images/equipment/slicers/white-bread-slicer.jpg",
+    image: "/images/equipment/slicers/bread-slicer-silver.jpg",
     specs: ["Slice thickness: 10-14mm", "Speed: 200 loaves/hr", "Safety Sensors"],
   },
   {
@@ -119,7 +119,8 @@ export const equipment = [
     name: "Gravity Feed Slicer",
     category: "slicers",
     description: "Efficient gravity feed slicer for consistent daily use.",
-    image: "/images/equipment/slicers/bread-slicer-silver.jpg",
+    image: "/images/equipment/slicers/white-bread-slicer.jpg",
     specs: ["Manual/Gravity Feed", "Stainless Blades", "Compact Design"],
   },
 ];
+

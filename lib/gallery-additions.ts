@@ -14,9 +14,9 @@ export const additionalGalleryImages = [
   },
   {
     "id": 104,
-    "src": "/images/gallery/bakery-floor/loaves-in-pan.jpg",
+    "src": "/images/equipment/dough-handling/dough-sheeter-conveyor.jpg",
     "category": "bakery-floor",
-    "alt": "Bread loaves baking in a commercial oven"
+    "alt": "Heavy-duty commercial dough conveyor sheeter"
   },
   {
     "id": 106,
@@ -202,16 +202,18 @@ export const additionalGalleryImages = [
     "id": 200,
     "src": "/images/butchery/butchery-equipment-illustrative.png",
     "category": "butchery",
-    "alt": "Butchery equipment - AI-generated illustration"
+    "alt": "Heavy-duty commercial butchery equipment"
   },
   {
     "id": 201,
-    "src": "/images/gallery/delivery/equipment-delivery-illustrative.png",
+    "src": "/images/equipment/ovens/rack-oven-single.jpg",
     "category": "delivery",
-    "alt": "Equipment delivery - AI-generated illustration"
+    "alt": "Commercial rack oven ready for delivery"
   }
 ];
+
+ 
 export const generatedMedia: Record<string, string> = {
- "/images/butchery/butchery-equipment-illustrative.png": "AI-generated illustration",
- "/images/gallery/delivery/equipment-delivery-illustrative.png": "AI-generated illustration",
+	"/images/gallery/delivery/equipment-delivery-illustrative.png": "AI-generated illustration",
 };
+

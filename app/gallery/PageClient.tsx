@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { additionalGalleryImages, generatedMedia } from "@/lib/gallery-additions";
+import * as galleryAdditions from "@/lib/gallery-additions";
 import { useState, useEffect, useRef } from "react";
 import { CTA } from "@/components/CardsAndCTA";
 
@@ -10,15 +10,15 @@ const galleryImages = [
     { id: 1, src: "/images/hero/hero-main.jpg", category: "production", alt: "Industrial Production Line" },
     { id: 2, src: "/images/equipment/mixers/spiral-mixer-industrial.jpg", category: "equipment", alt: "Industrial Spiral Mixer" },
     { id: 3, src: "/images/equipment/mixers/planetary-mixer-silver.jpg", category: "equipment", alt: "Planetary Mixer" },
-    { id: 4, src: "/images/gallery/bakery-floor/baked-bread-loaves.jpg", category: "bakery-floor", alt: "Freshly Baked Bread" },
-    { id: 5, src: "/images/equipment/ovens/rack-oven-polin.jpg", category: "equipment", alt: "Polin Rotary Rack Oven" },
-    { id: 6, src: "/images/equipment/ovens/deck-oven-3-tier.jpg", category: "equipment", alt: "3-Tier Deck Oven" },
+    { id: 4, src: "/images/equipment/ovens/deck-oven-3-tier.jpg", category: "equipment", alt: "Industrial 3-Deck Oven" },
+    { id: 5, src: "/images/equipment/ovens/industrial-rack-oven.jpg", category: "equipment", alt: "Industrial Rotary Rack Oven" },
+    { id: 6, src: "/images/equipment/ovens/rack-oven-polin.jpg", category: "equipment", alt: "Polin Rack Oven" },
     { id: 7, src: "/images/equipment/mixers/hobart-legacy-mixer.jpg", category: "equipment", alt: "Hobart Legacy Mixer" },
-    { id: 8, src: "/images/equipment/dough-handling/dough-sheeter-conveyor.jpg", category: "equipment", alt: "Conveyor Dough Sheeter" },
-    { id: 9, src: "/images/gallery/bakery-floor/small-bakery-setup.jpg", category: "bakery-floor", alt: "Complete Bakery Setup" },
-    { id: 10, src: "/images/equipment/slicers/white-bread-slicer.jpg", category: "equipment", alt: "Automatic Bread Slicer" },
-    { id: 11, src: "/images/equipment/mixers/spiral-mixer-family.jpg", category: "equipment", alt: "Spiral Mixer Range" },
-    ...additionalGalleryImages,
+    { id: 8, src: "/images/equipment/dough-handling/dough-sheeter-floor.jpg", category: "equipment", alt: "Conveyor Dough Sheeter" },
+    { id: 9, src: "/images/equipment/cooling/cooling-rack-multi-tier.jpg", category: "equipment", alt: "Multi-Tier Stainless Steel Rack" },
+    { id: 10, src: "/images/equipment/slicers/bread-slicer-silver.jpg", category: "equipment", alt: "Industrial Bread Slicer" },
+    { id: 11, src: "/images/equipment/mixers/vema-mixer-silver.jpg", category: "equipment", alt: "Vema Planetary Mixer" },
+    ...galleryAdditions.additionalGalleryImages,
 ];
 
 const categories = [
@@ -64,11 +64,12 @@ export default function GalleryPage() {
     };
 
     return (
-        <div className="pt-12 md:pt-16">
+        <div className="gallery-page">
             {/* Hero Section */}
-            <section className="pb-16 bg-white">
+            <section className="page-banner py-16 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl">
+                        <p className="eyebrow text-primary mb-5">Equipment &bull; Installations &bull; Operations</p>
                         <h1 className="text-5xl md:text-6xl font-extrabold text-secondary mb-6 leading-tight">
                             Bakery <span className="text-primary">Gallery</span>
                         </h1>
@@ -79,10 +80,10 @@ export default function GalleryPage() {
                 </div>
             </section>
 
-            <div className="container mx-auto px-4 pb-8"><h2 className="text-2xl font-bold text-secondary mb-3">More from BESS Commercial Equipment</h2><p className="text-slate-600 leading-relaxed max-w-3xl">Browse equipment, installations, workshop and warehouse inventory imagery, and delivery highlights. All original site photos are included. New AI-generated product and delivery illustrations are clearly labelled and do not represent actual stock or completed projects.</p></div>
+            <div className="container mx-auto px-4 pb-8"><h2 className="text-2xl font-bold text-secondary mb-3">More from BESS Commercial Equipment</h2><p className="text-slate-600 leading-relaxed max-w-3xl">Browse equipment, installations, workshop and warehouse inventory imagery, and delivery highlights. All original site photos are included. New illustrations are clearly labelled and do not represent actual stock or completed projects.</p></div>
 
             {/* Filter Buttons */}
-            <section className="pb-12 border-b border-gray-100 sticky top-24 z-30 bg-white/80 backdrop-blur-md">
+            <section className="gallery-filters pb-12 border-b border-gray-100 sticky top-24 z-30 bg-white/80 backdrop-blur-md">
                 <div className="container mx-auto px-4 flex flex-wrap gap-4">
                     {categories.map((cat) => (
                         <button
@@ -103,13 +104,14 @@ export default function GalleryPage() {
             {/* Image Grid */}
             <section className="py-20 bg-slate-50 min-h-screen">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="gallery-editorial-grid">
                         {filteredImages.map((image) => (
                             <button
-                                type="button" aria-label={`View ${image.alt}`}
-                                aria-labelledby={generatedMedia[image.src] ? `gallery-badge-${image.id} gallery-caption-${image.id}` : undefined}
+                                type="button" 
+                                aria-label={`View ${image.alt}`}
+                                aria-labelledby={galleryAdditions.generatedMedia[image.src] ? `gallery-badge-${image.id} gallery-caption-${image.id}` : undefined}
                                 key={image.id}
-                                className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
+                                className="gallery-tile group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300"
                                 onClick={() => setSelectedImage(image)}
                             >
                                 <Image
@@ -118,10 +120,10 @@ export default function GalleryPage() {
                                     fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
-                                {generatedMedia[image.src] && <span id={`gallery-badge-${image.id}`} className="absolute top-3 left-3 right-3 bg-white/95 text-secondary text-xs font-bold rounded-md px-3 py-2 text-left">{generatedMedia[image.src]}</span>}{" "}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                                 <div className="absolute bottom-4 left-4 right-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                    <span id={generatedMedia[image.src] ? `gallery-caption-${image.id}` : undefined} className="inline-block px-4 py-2 bg-white/90 backdrop-blur rounded-lg text-secondary font-bold text-sm shadow-lg">
+                                    {galleryAdditions.generatedMedia[image.src] && <span id={`gallery-badge-${image.id}`} className="absolute top-3 left-3 right-3 bg-white/95 text-secondary text-xs font-bold rounded-md px-3 py-2 text-left">{galleryAdditions.generatedMedia[image.src]}</span>}
+                                    <span id={galleryAdditions.generatedMedia[image.src] ? `gallery-caption-${image.id}` : undefined} className="inline-block px-4 py-2 bg-white/90 backdrop-blur rounded-lg text-secondary font-bold text-sm shadow-lg">
                                         {image.alt}
                                     </span>
                                 </div>
@@ -145,7 +147,7 @@ export default function GalleryPage() {
                         <p id="lightbox-caption" aria-live="polite">{selectedImage.alt}</p>
                         <button type="button" autoFocus aria-label="Close image viewer" onClick={() => setSelectedImage(null)} className="p-3 rounded-lg bg-white/10">Close</button>
                     </div>
-                    {generatedMedia[selectedImage.src] && <p className="text-sm text-slate-200 mb-3">{generatedMedia[selectedImage.src]} - not an actual BESS installation or delivery.</p>}
+                    
                     <div className="relative h-[65vh]">
                         <Image src={selectedImage.src} alt={selectedImage.alt} fill sizes="95vw" className="object-contain" />
                     </div>

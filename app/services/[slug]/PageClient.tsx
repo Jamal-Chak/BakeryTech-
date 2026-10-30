@@ -27,7 +27,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ slug: 
 
     return (
         <div className="pt-12 md:pt-16">
-            <section className="pb-20">
+            <section className="detail-surface pb-20">
                 <div className="container mx-auto px-4">
                     <Link
                         href="/services"
@@ -89,13 +89,13 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ slug: 
                         </div>
 
                         <div className="space-y-12">
-                            <div className="bg-secondary rounded-[3rem] aspect-[4/5] flex items-center justify-center text-white/5 relative overflow-hidden shadow-2xl">
+                            <div className="bg-secondary rounded-xl aspect-[4/5] flex items-center justify-center text-white/5 relative overflow-hidden shadow-2xl">
                                 <Icon size={250} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                             </div>
 
                             {/* Trust Indicators */}
-                            <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl space-y-6">
+                            <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-xl space-y-6">
                                 <h4 className="text-xl font-bold text-secondary">Why trust BESS?</h4>
                                 <div className="space-y-4">
                                     <div className="flex gap-4">

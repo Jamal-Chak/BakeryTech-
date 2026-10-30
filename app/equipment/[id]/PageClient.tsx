@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 export default function EquipmentDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
     const item = equipment.find(e => e.id === id);
+    const imgSrc = item?.image || "/images/equipment/ovens/industrial-rack-oven.jpg";
 
     if (!item) {
         notFound();
@@ -19,7 +20,7 @@ export default function EquipmentDetailPage({ params }: { params: Promise<{ id: 
 
     return (
         <div className="pt-12 md:pt-16">
-            <section className="pb-20">
+            <section className="detail-surface pb-20">
                 <div className="container mx-auto px-4">
                     <Link
                         href="/equipment"
@@ -30,8 +31,8 @@ export default function EquipmentDetailPage({ params }: { params: Promise<{ id: 
                     </Link>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                        <div className="relative aspect-square rounded-3xl overflow-hidden bg-slate-100">
-                            <Image src={item.image} alt={item.name} fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-contain" priority />
+                        <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-100">
+                            <Image src={imgSrc} alt={item.name} fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-contain" priority />
                         </div>
 
                         {/* Content */}
@@ -65,7 +66,7 @@ export default function EquipmentDetailPage({ params }: { params: Promise<{ id: 
                                 </div>
                             </div>
 
-                            <div className="bg-secondary p-8 rounded-[3rem] text-white space-y-6 shadow-xl">
+                            <div className="bg-secondary p-8 rounded-xl text-white space-y-6 shadow-xl">
                                 <h4 className="text-2xl font-bold">Interested in this unit?</h4>
                                 <p className="text-white/70">
                                     Ask for a quotation and discuss installation and maintenance options.
@@ -107,3 +108,4 @@ export default function EquipmentDetailPage({ params }: { params: Promise<{ id: 
         </div>
     );
 }
+

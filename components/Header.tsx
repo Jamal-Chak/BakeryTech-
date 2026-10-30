@@ -6,12 +6,12 @@ import { Menu, X, MessageCircle, Phone } from "lucide-react";
 import Brand from "./Brand";
 import { SocialLinks, WhatsAppLink } from "./ContactLinks";
 import { site, phoneHref } from "@/lib/site";
-const links = [{name: "Home", href: "/"}, {name: "About Us", href: "/about"}, {name: "Bakery", href: "/bakery"}, {name: "Butchery", href: "/butchery"}, {name: "Catering", href: "/catering"}, {name: "Maintenance & Repair", href: "/services"}, {name: "Gallery", href: "/gallery"}, {name: "Contact", href: "/contact"}];
+const links = [{name: "Home", href: "/"}, {name: "About Us", href: "/about"}, {name: "Bakery", href: "/bakery"}, {name: "Butchery", href: "/butchery"}, {name: "Maintenance & Repair", href: "/services"}, {name: "Gallery", href: "/gallery"}, {name: "Contact", href: "/contact"}];
 export default function Header() {
  const [open, setOpen] = useState(false);
  const pathname = usePathname();
  useEffect(() => { if (!open) return; const close = (event: KeyboardEvent) => {if (event.key === "Escape") {setOpen(false); document.getElementById("menu-toggle")?.focus();}}; window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, [open]);
- return <header className="sticky top-0 z-50 bg-white border-b border-slate-200">
+ return <header className="site-header sticky top-0 z-50 bg-white border-b border-slate-200">
   <div className="border-b border-slate-100"><div className="container mx-auto px-5 flex justify-between items-center min-h-11 gap-3">
    <p className="hidden sm:block text-xs font-medium text-slate-600">Supply. Install. Service. <span className="ml-2 text-secondary font-bold">Built for your business.</span></p>
    <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4"><a href={phoneHref} className="flex items-center gap-2 text-xs font-bold text-secondary"><Phone size={13} aria-hidden="true"/>{site.phoneDisplay}</a><SocialLinks/></div>

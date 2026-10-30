@@ -15,6 +15,7 @@ export default function ContactPage({ productId, division, catalog = false }: { 
     const product = equipment.find(item => item.id === productId);
     const [errorMessage, setErrorMessage] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+    const [whatsappFallback, setWhatsAppFallback] = useState(false);
 
     const {
         register,
@@ -37,6 +38,10 @@ export default function ContactPage({ productId, division, catalog = false }: { 
             });
 
             if (response.ok) {
+                const result = await response.json();
+                if (result.delivery === "whatsapp-fallback") {
+                    setWhatsAppFallback(true);
+                }
                 setStatus("success");
                 reset({ product: product?.id || "", division: division || "", service: catalog ? "catalog" : product ? "other" : undefined });
             } else {
@@ -51,17 +56,18 @@ export default function ContactPage({ productId, division, catalog = false }: { 
 
     return (
         <div className="pt-12 md:pt-16">
-            <section className="pb-20">
+            <section className="detail-surface pb-20">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                         {/* Contact Info */}
                         <div className="space-y-12">
                             <div className="space-y-6">
+                                <p className="eyebrow text-primary">Benoni • Equipment & support</p>
                                 <h1 className="text-5xl md:text-6xl font-extrabold text-secondary leading-tight">
                                     Get in <span className="text-primary">Touch</span>
                                 </h1>
                                 <p className="text-xl text-gray-500 max-w-lg leading-relaxed">
-                                    Looking for bakery, butchery or catering equipment? Request a catalog, discuss an installation or arrange technical support.
+                                    Looking for bakery or butchery equipment? Request a catalog, discuss an installation or arrange technical support.
                                 </p>
                             </div>
 
@@ -86,7 +92,7 @@ export default function ContactPage({ productId, division, catalog = false }: { 
                                 ))}
                             </div>
 
-                            <div className="bg-secondary p-8 rounded-[2.5rem] text-white">
+                            <div className="bg-secondary p-8 rounded-xl text-white">
                                 <h4 className="text-2xl font-bold mb-4">Areas We Service</h4>
                                 <p className="text-white/70 mb-6 leading-relaxed">
                                     Contact us to confirm service availability in your region:
@@ -102,7 +108,7 @@ export default function ContactPage({ productId, division, catalog = false }: { 
                         </div>
 
                         {/* Contact Form */}
-                        <div className="bg-white p-8 md:p-12 rounded-[3rem] shadow-2xl border border-gray-100">
+                        <div className="contact-enquiry-panel bg-white p-8 md:p-12 rounded-xl shadow-2xl border border-gray-100">
                             <AnimatePresence mode="wait">
                                 {status === "success" ? (
                                     <motion.div
@@ -115,15 +121,33 @@ export default function ContactPage({ productId, division, catalog = false }: { 
                                             <CheckCircle size={64} />
                                         </div>
                                         <h3 className="text-3xl font-bold text-secondary">Message Sent!</h3>
-                                        <p className="text-gray-500">
-                                            Thank you for contacting us. Our team will review your enquiry.
-                                        </p>
-                                        <button
-                                            onClick={() => setStatus("idle")}
-                                            className="text-primary font-bold underline"
-                                        >
-                                            Send another message
-                                        </button>
+                                        {whatsappFallback ? (
+                                            <p className="text-primary font-medium">
+                                                Email delivery is not configured — we will contact you directly via WhatsApp at <span className="underline">{site.phoneDisplay}</span>.
+                                            </p>
+                                        ) : (
+                                            <p className="text-gray-500">
+                                                Thank you for contacting us. Our team will review your enquiry.
+                                            </p>
+                                        )}
+                                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                            <WhatsAppLink className="btn-primary flex justify-center">
+                                                <MessageSquare size={18} aria-hidden="true" />
+                                                Get a Quote on WhatsApp
+                                            </WhatsAppLink>
+                                            <button
+                                                onClick={() => setStatus("idle")}
+                                                className="text-sm font-medium text-secondary underline"
+                                            >
+                                                Send another message
+                                            </button>
+                                        </div>
+                                        <div className="mt-8 p-4 rounded-xl bg-slate-50 border border-slate-100 text-left text-sm text-slate-600 space-y-2">
+                                            <p className="font-bold text-secondary">Direct contact details</p>
+                                            <p>Phone: <a href={phoneHref} className="text-primary underline">{site.phoneDisplay}</a></p>
+                                            <p>Email: <a href={`mailto:${site.email}`} className="text-primary underline">{site.email}</a></p>
+                                            <p>Location: {site.location}</p>
+                                        </div>
                                     </motion.div>
                                 ) : (
                                     <motion.form
@@ -234,9 +258,18 @@ export default function ContactPage({ productId, division, catalog = false }: { 
                                         </button>
 
                                         {status === "error" && (
-                                            <div role="alert" className="bg-red-50 p-4 rounded-xl flex items-center gap-3 text-red-600">
-                                                <AlertCircle size={20} />
-                                                <p className="text-sm font-medium">{errorMessage || "Unable to send your enquiry. Please try again or email us directly."}</p>
+                                            <div role="alert" className="bg-amber-50 border border-amber-200 p-5 rounded-xl text-amber-900 space-y-3">
+                                                <div className="flex items-center gap-3">
+                                                    <AlertCircle size={20} className="text-amber-600 shrink-0" />
+                                                    <p className="text-sm font-semibold">{errorMessage || "Direct email delivery is temporarily unavailable. We're on standby to assist you directly."}</p>
+                                                </div>
+                                                <p className="text-xs text-amber-800">
+                                                    You can connect with our sales and technical support team immediately via WhatsApp:
+                                                </p>
+                                                <WhatsAppLink className="inline-flex items-center gap-2 bg-primary text-white text-xs font-bold px-4 py-2.5 rounded-lg hover:bg-orange-800 transition-colors">
+                                                    <MessageSquare size={16} aria-hidden="true" />
+                                                    Chat on WhatsApp Now
+                                                </WhatsAppLink>
                                             </div>
                                         )}
                                     </motion.form>
@@ -250,7 +283,7 @@ export default function ContactPage({ productId, division, catalog = false }: { 
             <section className="py-12 bg-slate-100" aria-label="Business location map">
                 <div className="container mx-auto px-4">
                     <p className="mb-4 text-secondary">Find us at {site.location}. Contact us to arrange a visit.</p>
-                    <iframe title={`Map of ${site.location}`} src={`https://www.google.com/maps?q=${encodeURIComponent(site.location)}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-[400px] border-0 rounded-3xl" />
+                    <iframe title={`Map of ${site.location}`} src={`https://www.google.com/maps?q=${encodeURIComponent(site.location)}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-[400px] border-0 rounded-xl" />
                 </div>
             </section>
         </div>

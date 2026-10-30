@@ -6,26 +6,26 @@ import Link from "next/link";
 import { Info, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
-export function EquipmentCard({ name, description, id, image }: {name: string; description: string; id: string; image?: string}) {
+
+
+export function EquipmentCard({ name, description, id, image, specs = [] }: {name: string; description: string; id: string; image?: string; specs?: readonly string[]}) {
+    const imgSrc = image || "/images/equipment/ovens/industrial-rack-oven.jpg";
     return (
-        <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
-            <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                {image ? (
-                    <Image
-                        src={image}
-                        alt={name}
-                        fill sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-gray-400">
-                        <span className="text-sm font-medium">Equipment Image</span>
-                    </div>
-                )}
+        <div className="equipment-product-card technical-card bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all group">
+            <div className="product-image-panel aspect-[4/3] bg-slate-900 relative overflow-hidden">
+                <Image
+                    src={imgSrc}
+                    alt={name}
+                    fill
+                    sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    
+                />
             </div>
             <div className="p-6 space-y-4">
                 <h3 className="text-xl font-bold text-secondary">{name}</h3>
-                <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed">{description}</p>
+                <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
+                <div className="spec-tags"><span>Commercial equipment</span><span>Technical support</span>{specs.map(spec => <span key={spec}>{spec}</span>)}</div>
                 <div className="flex items-center justify-between pt-2 border-t border-gray-50">
                     <Link
                         href={`/equipment/${id}`}
@@ -51,7 +51,7 @@ export function Testimonials() {
     if (!reviews.length) return null;
 
     return (
-        <section className="py-24 bg-secondary">
+        <section className="py-24 bg-slate-950 text-slate-100">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                     <h2 className="text-primary font-bold uppercase tracking-widest text-sm">Testimonials</h2>

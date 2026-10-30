@@ -8,8 +8,8 @@ const icons = [Wrench, Zap, Package, Truck, Settings];
 
 export default function ServicesPage() {
     return (
-        <div className="pt-12 md:pt-16">
-            <section className="pb-20">
+        <div className="services-page">
+            <section className="page-banner py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl">
                         <h1 className="text-5xl md:text-6xl font-extrabold text-secondary mb-6 leading-tight">
@@ -17,7 +17,7 @@ export default function ServicesPage() {
                             <span className="text-primary">Moving</span>
                         </h1>
                         <p className="text-xl text-gray-500 leading-relaxed max-w-2xl">
-                            Installation, ongoing maintenance, spare parts and emergency repair callouts for bakery, butchery and catering equipment. Talk to BESS about minimising downtime and keeping your operation productive.
+                            Installation, ongoing maintenance, spare parts and emergency repair callouts for bakery and butchery equipment. Talk to BESS about minimising downtime and keeping your operation productive.
                         </p>
                     </div>
                 </div>
@@ -26,7 +26,7 @@ export default function ServicesPage() {
             {/* Services Grid */}
             <section className="py-20 bg-slate-50">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="services-editorial-grid">
                         {services.map((service, index) => (
                             <ServiceCard
                                 key={service.slug}

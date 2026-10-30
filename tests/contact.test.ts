@@ -71,10 +71,11 @@ test("never reports success on missing credentials or provider failure", async (
 });
 
 test("accepts catalog requests for all three divisions and includes context in the email", async () => {
- for (const division of ["bakery", "butchery", "catering"]) {
+ for (const division of ["bakery", "butchery", "services"]) {
   const response = await POST(request({...valid, product: "", division, service: "catalog", message: `Please send the ${division} equipment catalog.`}));
   assert.equal(response.status, 200);
   assert.match(String(emailCalls.at(-1)?.text), new RegExp(`Division: ${division}`));
   assert.equal(emailCalls.at(-1)?.subject, "BESS enquiry: catalog");
  }
 });
+

@@ -16,11 +16,11 @@ try {
  assert.ok(sitemap.includes("/gallery"));
  assert.ok((await (await fetch(base + "/robots.txt")).text()).includes("sitemap.xml"));
  for (const missing of ["/equipment/unknown", "/services/unknown"]) assert.equal((await fetch(base + missing)).status, 404, missing);
- for (const path of ["/", "/bakery", "/butchery", "/catering", "/services", "/equipment", "/gallery", "/about", "/contact", "/equipment/deck-oven-3-deck", "/services/emergency-repairs"]) {
+ for (const path of ["/", "/bakery", "/butchery", "/services", "/equipment", "/gallery", "/about", "/contact", "/privacy", "/equipment/deck-oven-3-deck", "/services/emergency-repairs"]) {
   const response = await page.goto(base + path);
   assert.equal(response.status(), 200, path);
   await page.locator("h1").waitFor();
-  if (path === "/") assert.equal(await page.locator("h1").textContent(), "BESS \u2014 Commercial Bakery, Butchery & Catering Equipment");
+  if (path === "/") assert.equal(await page.locator("h1").textContent(), "BESS \u2014 Commercial Bakery & Butchery Equipment");
   assert.equal(await page.getByText("\u00a9 2026 BESS Commercial Equipment. All rights reserved.", {exact:true}).count(), 1);
   assert.ok((await page.title()).includes("BESS Commercial Equipment"));
   for (const selector of ['meta[name="description"]','meta[property="og:title"]','meta[property="og:description"]','meta[name="twitter:card"]','link[rel="canonical"]']) assert.equal(await page.locator(selector).count(), 1, path + selector);
@@ -50,6 +50,26 @@ try {
   const violations = results.violations;
   if (violations.length) failures.push({path, violations: violations.map(v => ({id: v.id, impact: v.impact, nodes: v.nodes.map(n => ({html: n.html, summary: n.failureSummary}))}))});
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `desktop overflow: ${path}`);
+ }
+ // Category controls must filter the real range and restore the complete catalogue.
+ for (const [path, total, categories] of [
+  ["/bakery", 6, [["Ovens", 1], ["Mixers", 1], ["Dough preparation", 2], ["Slicers", 1], ["Proving", 1]]],
+  ["/butchery", 5, [["Cutting", 1], ["Meat processing", 3], ["Cold storage", 1]]],
+   ]) {
+  await page.goto(base + path);
+  const filters = page.getByRole("group", {name: /equipment categories/});
+  for (const [label, count] of categories) {
+   const control = filters.getByRole("button", {name: label, exact: true});
+   await control.focus(); await page.keyboard.press("Enter");
+   await page.waitForFunction(expected => document.querySelectorAll(".range-product-card").length === expected, count);
+   assert.equal(await control.getAttribute("aria-pressed"), "true");
+   assert.ok((await page.getByRole("status").textContent()).includes(String(count)));
+   if (path === "/bakery" && label === "Ovens") assert.equal(await page.locator(".equipment-product-card").count(), 3);
+   if (path === "/bakery" && label === "Dough preparation") assert.equal(await page.locator(".equipment-product-card").count(), 1);
+  }
+  await filters.getByRole("button", {name: "All equipment", exact: true}).click();
+  await page.waitForFunction(expected => document.querySelectorAll(".range-product-card").length === expected, total);
+  if (path === "/bakery") assert.equal(await page.locator(".equipment-product-card").count(), 10);
  }
  await page.goto(base + "/equipment/deck-oven-3-deck");
  await page.getByRole("link", {name: "Enquire for Pricing"}).click();
@@ -87,7 +107,7 @@ try {
  assert.equal(await page.getByRole("dialog").count(), 0);
  assert.ok(await firstImage.evaluate(el => el === document.activeElement), "focus restored to gallery image");
  await page.setViewportSize({width: 390, height: 844});
- for (const path of ["/", "/bakery", "/butchery", "/catering", "/equipment", "/gallery", "/about", "/contact"]) {
+ for (const path of ["/", "/bakery", "/butchery", "/equipment", "/gallery", "/about", "/contact", "/privacy"]) {
   await page.goto(base + path); await page.locator("h1").waitFor();
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `mobile overflow: ${path}`);
  }
@@ -106,3 +126,6 @@ try {
  assert.equal(failures.length, 0, "serious/critical accessibility findings; see test-results/accessibility.json");
  console.log("Browser QA passed: metadata, product enquiry, mocked form submit, gallery keys/focus, mobile navigation and overflow.");
 } finally { await browser.close(); }
+
+
+
